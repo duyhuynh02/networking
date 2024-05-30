@@ -1,6 +1,6 @@
 # HOMEWORK QUESTIONS
 
-# SECTION 1.1
+## SECTION 1.1
 R1. What is the difference between a host and an end system? List several different types of end systems. Is a Web server an end system?
 
 ~~There is no difference. Host and end system is the same~~ 
@@ -204,4 +204,58 @@ R: link bandwidth (bit tranmission rate)
 
 Assume package length is 1000 bits => (500 + 350) / 2 * 1000 / 500 (assume tranmission rate is 500) = 425. 
 
+```
+
+## SECTION 1.5
+R22. If two end-systems are connected through multiple routers and the data-link level between them ensures reliable data delivery, is a transport protocol offering reliable data delivery between these two end-systems necessary? Why?
+```sh
+It's still needed, not only the transport protocol offering reliable data delivery, it also contain headers which have the information on it. 
+```
+
+R23. What are the five layers in the Internet protocol stack? What are the principal responsibilities of each of these layers?
+```sh
+Application layer: transfer the message from one system to another system 
+Transport layer: transfer M (e.g., reliably) from one process to another, create a transport layer segment 
+Network layer: create a network-layer datagram   
+Link layer: create a link-layer frame
+Physical layer: transfer bits
+```
+
+R24. What do encapsulation and de-encapsulation mean? Why are they needed in
+a layered protocol stack?
+```sh
+Encapsulation means creating a layer to cover/encapsulate/wrapiing the headers with needed data. For instance, we can transfer bit from one host to end system, but if we want to transfer a software. We need to packet so that we can send it. 
+
+Decapsulation is the reverse process of removing the added headers and extracting the original data as it moves up the layers of the protocol stacks. 
+```
+
+R25. Which layers in the Internet protocol stack does a router process? Which layers does a link-layer switch process? Which layers does a host process?
+```sh
+Router process: network-layer 
+Link-layer switch process: link-layer 
+Host process: application layer 
+```
+
+## SECTION 1.6
+R26. What is self-replicating malware?
+```sh
+Self-replicating malware can be duplicate itself and spread them all over the network or the internet, and it also does not need to attach themselves to hostfiles. 
+
+Famous worms: Blaster, Conficker, and Code Red. 
+```
+
+R27. Describe how a botnet can be created and how it can be used for a DDoS attack.
+```sh
+A botnet can be created by a malware which spread to all the devices in the network e.g., computers, smartphone, IoT,... 
+
+It can used to send a lot of requests to the victim/end system to cause a high workload so that the end system will be stall/overwhelming traffic or even crash the server. 
+```
+
+R28. Suppose Alice and Bob are sending packets to each other over a computer
+network. Suppose Trudy positions herself in the network so that she can
+capture all the packets sent by Alice and send whatever she wants to Bob; she
+can also capture all the packets sent by Bob and send whatever she wants to
+Alice. List some of the malicious things Trudy can do from this position.
+```sh
+She can read, change or even send the harmful/malicious software to attack Bob/Alice's system. 
 ```
