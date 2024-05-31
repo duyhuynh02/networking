@@ -148,23 +148,26 @@ It will tell us on average, how many times it needed for the server re-transmist
 ```
 
 P23. Consider Figure 1.19(a). Assume that we know the bottleneck link along the path from the server to the client is the first link with rate Rs bits/sec. Suppose we send a pair of packets back to back from the server to the client, and there is no other traffic on this path. Assume each packet of size L bits, and both links have the same propagation delay dprop.
-a. What is the packet inter-arrival time at the destination? That is, how much
-time elapses from when the last bit of the first packet arrives until the last
-bit of the second packet arrives?
+
+a. What is the packet inter-arrival time at the destination? That is, how much time elapses from when the last bit of the first packet arrives until the last bit of the second packet arrives?
 ```
 First link: Rs bits/s
 each packet: size L bits 
 both links: same d(prop)
 ```
 ```sh
-
+The first packet time arrival time is: d(trans) + d(prop)
+The 2nd packet time start immediately after the first packet: d(trans) + d(trans) + d(prop) = 2d(trans) + d(prop)
+Delta(t1) = (t2 - t1) = d(trans) = R/S 
 ```
 
-b. Now assume that the second link is the bottleneck link (i.e., Rc 6 Rs). Is
+b. Now assume that the second link is the bottleneck link (i.e., Rc < Rs). Is
 it possible that the second packet queues at the input queue of the second
 link? Explain. Now suppose that the server sends the second packet T
 seconds after sending the first packet. How large must T be to ensure no
 queuing before the second link? Explain.
 ```sh
+It's possible, when the 2nd packet arrives to the queue, the first one still being in the state of transmistting.  
 
+For 2nd question, I have no idea :D 
 ```
