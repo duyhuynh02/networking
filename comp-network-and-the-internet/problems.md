@@ -207,18 +207,58 @@ The number of messages sent by the server at rate of 20 Mbps: Rs*T / L / R = 20 
 That will be the same as above answer. 
 ```
 
-P31. In modern packet-switched networks, including the Internet, the source host segments long, application-layer messages (for example, an image or a music file) into smaller packets and sends the packets into the network. The receiver then reassembles the packets back into the original message. We refer to this process as message segmentation. Figure 1.27 illustrates the end-to-end transport of a message with and without message segmentation. Consider a message that is 106 bits long that is to be sent from source to destination in Figure 1.27. Suppose each link in the figure is 5 Mbps. Ignore propagation, queuing, and processing delays.
+P31. In modern packet-switched networks, including the Internet, the source host segments long, application-layer messages (for example, an image or a music file) into smaller packets and sends the packets into the network. The receiver then reassembles the packets back into the original message. We refer to this process as message segmentation. Figure 1.27 illustrates the end-to-end transport of a message with and without message segmentation. Consider a message that is 10^6 bits long that is to be sent from source to destination in Figure 1.27. Suppose each link in the figure is 5 Mbps. Ignore propagation, queuing, and processing delays.
 
 a. Consider sending the message from source to destination without message segmentation. How long does it take to move the message from the source host to the first packet switch? Keeping in mind that each switch uses store-and-forward packet switching, what is the total time to move the message from source host to destination host?
 ```sh
-
+T = L / R = 10^6 / (5 * 10^6) = 0.2s, we have 2 switches, so it needs to be triple (3 links between) -> 0.6s. 
 ```
 b. Now suppose that the message is segmented into 100 packets, with each packet being 10,000 bits long. How long does it take to move the first packet from source host to the first switch? When the first packet is being sent from the first switch to the second switch, the second packet is being sent from the source host to the first switch. At what time will the second packet be fully received at the first switch?
 ```sh
-
+Sigma L = L1 + L2 + ... + Ln with all Ln are the same. 
+Time to move the first packet: T1 = L1 / R = 10000 / (5 * 10^6) = 0.002s 
+The time which second packet be fulled received at the first witch is: 0.002 + T2 = 0.002 + 0.002 = 0.004s 
 ```
 
 c. How long does it take to move the file from source host to destination host when message segmentation is used? Compare this result with your answer in part (a) and comment.
 ```sh
+The total time can be calculated as:
+(T1): The first packet transfer from source to destination (through 2 switches - 3 links) = 0.006s 
+(T(total-packets-overlap)): The total of packets being overlap each others, except the first packet, we have 99 packets being overlapped. = (100 - 1) * 0.002 = 0.198s
+
+Total T = T1 + T(total-packets-overlapp) = 0.006s + 0.198s = 0.204s 
+```
+
+d. In addition to reducing delay, what are reasons to use message
+segmentation?
+```sh
+Faster, clear as day. 
+```
+
+e. Discuss the drawbacks of message segmentation
+```sh
+Packet loss -> Reassmbly issue
+Latency issue 
+Error handling complexity issue 
+```
+
+P33. Consider sending a large file of F bits from Host A to Host B. There are three links (and two switches) between A and B, and the links are uncongested (that is, no queuing delays). Host A segments the file into segments of S bits each and adds 80 bits of header to each segment, forming packets of L = 80 + S bits. Each link has a transmission rate of R bps. Find the value of S that minimizes the delay of moving the file from Host A to Host B. Disregard propagation delay.
+```sh
+The total number of packets: T(packets-total) = F / S 
+The time for packet transfer from A to B: (80 + S) / R * 3
+The time for over between 2 packets: T(overlapping) = (80 + S) / R
+The total-time-overlapping for all the packets = 
+the time for first packet + (T(packet-totals) - 1)*(T(overlapping)) 
+= (80 + S / R * 3) + (F/S - 1) * (80 + S) / R 
+
+Expand it, then we need to choose S as smallest as possible, could be 0. 
+```
+
+P34. Early versions of TCP combined functions for both forwarding and reliable delivery. How are these TCP variants located in the ISO/OSI protocol stack? Why were forwarding functions later separated from TCP? What were the consequences?
+```sh
+From ChatGPT, this approach had limitations:
+Complexity: Combining forwarding and reliability made the TCP implementation complex.
+Scalability: It was challenging to scale the system efficiently.
+Resource Constraints: The same device had to manage both tasks, leading to resource constraints.
 
 ```
