@@ -150,11 +150,7 @@ It will tell us on average, how many times it needed for the server re-transmist
 P23. Consider Figure 1.19(a). Assume that we know the bottleneck link along the path from the server to the client is the first link with rate Rs bits/sec. Suppose we send a pair of packets back to back from the server to the client, and there is no other traffic on this path. Assume each packet of size L bits, and both links have the same propagation delay dprop.
 
 a. What is the packet inter-arrival time at the destination? That is, how much time elapses from when the last bit of the first packet arrives until the last bit of the second packet arrives?
-```
-First link: Rs bits/s
-each packet: size L bits 
-both links: same d(prop)
-```
+
 ```sh
 The first packet time arrival time is: d(trans) + d(prop)
 The 2nd packet time start immediately after the first packet: d(trans) + d(trans) + d(prop) = 2d(trans) + d(prop)
@@ -170,4 +166,59 @@ queuing before the second link? Explain.
 It's possible, when the 2nd packet arrives to the queue, the first one still being in the state of transmistting.  
 
 For 2nd question, I have no idea :D 
+```
+
+P24. Consider a user who needs to transmit 1.5 gigabytes of data to a server. The user lives in a village where only dial-up access is available. As an alternative, a bus collects data from users in rural areas and transfer them to the Internet through a 1 Gbps link once it gets back to the city. The bus visits the village once a day and stops in front of the user’s house just long enough to receive the data. The bus has a 100 Mbps WiFi connection. Suppose the average speed of the bus is 60 km/h and that the distance between the village and the city is 150 km. What is the fastest way the user can transfer the data to the server?
+```sh
+Time to goes from his village to city t = d / s = 150 / 60 = 2.5 hours = 9000s. If we do not use Wifi but wait for the bus driver to go to the city and send through the Internet, it will take 9000s + 1.5s = 9001.5s. 
+
+On the bus, WiFi will transfer 100 Mbps, so the needed time to transfer 1.5GB (1.5*1024^3*8) will be (1.5*1024^3*8) / (100 * 10^6) = 129s 
+
+The fastest way the user can transfer the data to the server would be 15s (transferring on the bus through WiFi connection).
+```
+
+P27. Consider the scenario illustrated in Figure 1.19(a). Assume Rs is 20 Mbps, Rc is 10 Mbps, and the server is continuously sending traffic to the client. Also assume the router between the server and the client can buffer at most four messages. After how many messages sent by the server will packet loss starts occurring at the router?
+```
+Rs = 20 Mbps 
+Rc = 10 Mbps 
+Buffer: 4 message at most 
+
+Rc is twice less than Rs. Assume it take 1s to transfer a packet from server to switch/router, and it takes 2s to transfer a packet from switch/router to end system. 
+
+The first four packet will take 1s from s -> router. 
+The first packet will take 2s from s -> router 
+The 5th, 6th packet will take 1s from s -> router 
+The 2nd packet will take 2s from s -> router 
+The 7th packet will take 1s from s -> router 
+The 8th packet will starting to be stucked.
+
+And so on
+=> So the answer will be the message 8th. 
+```
+
+Or should I use math for clarification? And this also the case for P28 
+```sh
+Denote the message is M (bits) -> the buffer size in bits will be 4 * M 
+
+The time T to fill the buffer is: T = Buffer size / Rate of accumulation = 4*M / (20 - 10) * 10^6 
+
+The number of messages sent by the server at rate of 20 Mbps: Rs*T / L / R = 20 * 10^6 * (4M / (10 * 10^6)) / M = 8 messages. 
+
+That will be the same as above answer. 
+```
+
+P31. In modern packet-switched networks, including the Internet, the source host segments long, application-layer messages (for example, an image or a music file) into smaller packets and sends the packets into the network. The receiver then reassembles the packets back into the original message. We refer to this process as message segmentation. Figure 1.27 illustrates the end-to-end transport of a message with and without message segmentation. Consider a message that is 106 bits long that is to be sent from source to destination in Figure 1.27. Suppose each link in the figure is 5 Mbps. Ignore propagation, queuing, and processing delays.
+
+a. Consider sending the message from source to destination without message segmentation. How long does it take to move the message from the source host to the first packet switch? Keeping in mind that each switch uses store-and-forward packet switching, what is the total time to move the message from source host to destination host?
+```sh
+
+```
+b. Now suppose that the message is segmented into 100 packets, with each packet being 10,000 bits long. How long does it take to move the first packet from source host to the first switch? When the first packet is being sent from the first switch to the second switch, the second packet is being sent from the source host to the first switch. At what time will the second packet be fully received at the first switch?
+```sh
+
+```
+
+c. How long does it take to move the file from source host to destination host when message segmentation is used? Compare this result with your answer in part (a) and comment.
+```sh
+
 ```
