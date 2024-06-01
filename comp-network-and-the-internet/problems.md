@@ -196,7 +196,7 @@ And so on
 => So the answer will be the message 8th. 
 ```
 
-Or should I use math for clarification? And this also the case for P28 
+P28. Or should I use math for clarification? 
 ```sh
 Denote the message is M (bits) -> the buffer size in bits will be 4 * M 
 
