@@ -137,7 +137,7 @@ For example, if you want to visit somewebsite.com:
 3. If local still doesn't contain the record, it communicate with higher level DNS servers iteratively (root/TLD/etc...) 
 4. When DNS server finds the resolved IP address, it replies to your client, and your browser stores it in memory for the future use 
 ```
-# SECTION 2.5
+## SECTION 2.5
 R21. Under what circumstances is file downloading through P2P much faster than through a centralized client-server approach? Justify your answer using Equation 2.2. 
 ```sh
 Khi the file is big enough. (and some case, the access rate us small.)
@@ -151,4 +151,30 @@ Alice needs to connect to an existing DHT (Distributed Hash Tabe) herself then o
 R23. Assume a BitTorrent tracker suddenly becomes unavailable. What are its consequences? Can files still be downloaded?
 ```sh
 No, there is no peer to obtain the information 
+```  
+
+## SECTION 2.6
+R24. CDNs typically adopt one of two different server placement philosophies. Name and briefly describe them.
+```sh
++ Enter Deep: CDNs servers deployed deep into many access network e.g., ISP -> servers are closed to users, then improve latency 
++ Bring Home: bring the smaller number of larger clusters near (but not within) access network -> maintain scalability while optimizing performance. 
+```
+
+R25. Besides network-related considerations such as delay, loss, and bandwidth performance, there are other important factors that go into designing a CDN server selection strategy. What are they?
+```sh
+Geographic or the type of streaming? 
+```
+
+## SECTION 2.7
+R26. In Section 2.7, the UDP server described needed only one socket, whereas the TCP server needed two sockets. Why? If the TCP server were to support n simultaneous connections, each from a different client host, how many sockets would the TCP server need?
+```sh
+UDP is connectionless, therefore no need to have a socket to listen to initilizze the connection. 
+
+n + 1, the one to create new socket, and the rest n sockets to support n simultaneous connections. 
+where: 1 main socket + n (child) sockets to handle communication with each client 
+```
+
+R27. For the client-server application over TCP described in Section 2.7, why must the server program be executed before the client program? For the client-server application over UDP, why may the client program be executed before the server program?
+```sh
+To initialize the first socket for listening the incoming request first, this is not the case for UDP, which is connectionless. 
 ```
