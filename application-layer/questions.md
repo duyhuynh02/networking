@@ -137,3 +137,18 @@ For example, if you want to visit somewebsite.com:
 3. If local still doesn't contain the record, it communicate with higher level DNS servers iteratively (root/TLD/etc...) 
 4. When DNS server finds the resolved IP address, it replies to your client, and your browser stores it in memory for the future use 
 ```
+# SECTION 2.5
+R21. Under what circumstances is file downloading through P2P much faster than through a centralized client-server approach? Justify your answer using Equation 2.2. 
+```sh
+Khi the file is big enough. (and some case, the access rate us small.)
+```
+
+R22. Consider a new peer Alice that joins BitTorrent without possessing any chunks. Without any chunks, she cannot become a top-four uploader for any of the other peers, since she has nothing to upload. How then will Alice get her first chunk?
+```sh
+Alice needs to connect to an existing DHT (Distributed Hash Tabe) herself then obtain information about other peers and chunks 
+```
+
+R23. Assume a BitTorrent tracker suddenly becomes unavailable. What are its consequences? Can files still be downloaded?
+```sh
+No, there is no peer to obtain the information 
+```
