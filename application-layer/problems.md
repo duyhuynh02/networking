@@ -93,3 +93,19 @@ Total response time = 0.3 * (time from browser to full internet) + 0.7 * (time f
 
 T(browser-to-internet) = 0.3 * 3.1022 + 0.7 * (1,600,000 / 10 * 10^9) = 0.93066 + 0.00016 = 0.93082 ~ 0.93 
 ```
+
+P12. Write a simple TCP program for a server that accepts lines of input from a client and prints the lines onto the server’s standard output. (You can do this by modifying the TCPServer.py program in the text.) Compile and execute your program. On any other machine that contains a Web browser, set the proxy server in the browser to the host that is running your server program; also configure the port number appropriately. Your browser should now send its GET request messages to your server, and your server should display the messages on its standard output. Use this platform to determine whether your browser generates conditional GET messages for objects that are locally cached
+```sh
+Check p12.py 
+```
+
+P13. Consider sending over HTTP/2 a Web page that consists of one video file and three images. Suppose that the video clip is transported as 5000 frames, and each image captures four frames.
+a. If all the video frames are sent first without interleaving, how many “frame times” are needed until all images are sent?
+```sh
+Time(without-interleaving) = Time(5000-frames-being-sent) + Time(images-being-sent)
+```
+b. If frames are interleaved, how many frame times are needed until all three
+images are sent?
+```sh
+12
+```
