@@ -102,10 +102,16 @@ Check p12.py
 P13. Consider sending over HTTP/2 a Web page that consists of one video file and three images. Suppose that the video clip is transported as 5000 frames, and each image captures four frames.
 a. If all the video frames are sent first without interleaving, how many “frame times” are needed until all images are sent?
 ```sh
-Time(without-interleaving) = Time(5000-frames-being-sent) + Time(images-being-sent)
+Time(without-interleaving) = Time(5000-frames-being-sent) + Time(images-being-sent) = 5000 + 3 * 4 = 5012 frame times
 ```
 b. If frames are interleaved, how many frame times are needed until all three
 images are sent?
 ```sh
-12
+Each image need 3 * 4 = 12 frame times
 ```
+
+P20. Consider the scenarios illustrated in Figures 2.12 and 2.13. Assume the rate of the institutional network is Rl and that of the bottleneck link is Rb. Suppose there are N clients requesting a file of size L with HTTP at the same time. For what values of Rl would the file transfer takes less time when a proxy is installed at the institutional network? (Assume the RTT between a client and any other host in the institutional network is negligible.)
+```sh
+ Rl > Rb
+```
+
