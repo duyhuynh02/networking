@@ -115,3 +115,47 @@ P20. Consider the scenarios illustrated in Figures 2.12 and 2.13. Assume the rat
  Rl > Rb
 ```
 
+P21. Suppose that your department has a local DNS server for all computers in the department. You are an ordinary user (i.e., not a network/system administrator). Can you determine if an external Web site was likely accessed from a computer in your department a couple of seconds ago? Explain
+```sh
+Yes, by using Wireshark to trace all the packets go from external website. 
+```
+
+P22. Consider distributing a file of F = 10 Gbits to N peers. The server has an upload rate of us = 1 Gbps, and each peer has a download rate of di = 200 Mbps and an upload rate of u. For N = 10, 100, and 1,000 and u = 2 Mbps, 10 Mbps, and 100 Mbps, prepare a table giving the minimum distribution time in seconds for each of the combinations of N and u for both client-server distribution and P2P distribution
+```sh
+File F = 10 Gbits -> N peers 
+u(s) = 1 Gbp
+
+Upload rate will be T(upload) = F / u(s) = 10 / 1 = 10 
+Download rate each peer d(i) = 200 Mbps; upload rate: u
+N = 10, 100, and 1000; u = 2 Mbps, 10 Mbps, and 100 Mbps
+
+Minimum distribution time in seconds for each of conbinations of N and u for both client-server distribution and P2P distribution 
+
+Rate of download from server to one client: T(client-server-to): 10*10^3 Mbits * 200 = 2000 * 10^3 Mbits  
+
+So, minimum distribution time in seconds = max(T(upload), T(client-server))
+```
+| Combination | Client-Server | P2P |
+|-------------|---------------|-----|
+|N = 10; u = 2 Mbps| 2000 * 10^4| 
+|N = 100; u = 10 Bps| 2000 * 10^5| 
+|N = 1000; u = 100 Mbps| 2000 * 10^6| 
+
+P25. Consider an overlay network with N active peers, with each pair of peers having an active TCP connection. Additionally, suppose that the TCP connections pass through a total of M routers. How many nodes and edges are there in the corresponding overlay network?
+```sh
+Total nodes = total peers + total routers = N + M 
+Total edges may be a little be complicated, forget about the M routes, we can see that the total of edges would be (T(edge-without-routes) = N * (N - 1) / 2) 
+
+But this time, we also need to pass through a total of M routers, then it would be: (N + M) * (N + M - 1) / 2 
+```
+
+P26. Suppose Bob joins a BitTorrent torrent, but he does not want to upload any data to any other peers (he wants to be a so-called free-rider).
+a. Alice who has been using BitTorrent tells Bob that he cannot receive a complete copy of the file that is shared by the swarm. Is Alice correct or not? Why?
+```sh
+Alice is correct, if Bob decided not to upload any data, then he won't receive any data from peers at the same network by tit-for-tat mechanism. 
+```
+b. Charlie claims that Alice is wrong and that he has even been using a collection of multiple computers (with distinct IP addresses) in the computer lab in his department to make his downloads faster, using some additional coordination scripting. What could his script have done?
+```sh
+He can use redundant IPs (multiple IPs address on 1 computer), spread his dowload requests across many peers without being a free-rider or he can also sending simulate data (meaning send fake data to other peers to trick BitTorrent)
+```
+
