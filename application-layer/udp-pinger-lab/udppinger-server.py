@@ -8,7 +8,7 @@ from socket import *
 serverSocket = socket(AF_INET, SOCK_DGRAM)
 
 # Assign IP address and port number to socket 
-serverSocket.bind(('192.168.31.26', 12000))
+serverSocket.bind(('localhost', 12000))
 print("Server start here on port 12000")
 
 while True:
