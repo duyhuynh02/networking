@@ -1,0 +1,89 @@
+# PROBLEMS
+I decide to work on problems which I found interesting and challenging. The full set of problems you can find and check on the textbook. Please buy a digital/hardcover to support the teachers. This solution is for educational purpose only, it's not correct 100% and should be double-checked with your teachers/peers. 
+
+## SOLUTIONS 
+P1. Suppose Client A requests a web page from Server S through HTTP and its
+socket is associated with port 33000.
+
+a. What are the source and destination ports for the segments sent from A to S?
+```sh
+Source port: 33000
+Destination port: 80 
+```
+
+b. What are the source and destination ports for the segments sent from S to A?
+```sh
+Src port: 80
+Dst port: 33000 
+```
+c. Can Client A contact to Server S using UDP as the transport protocol?
+```sh
+Yes it can (with QUIC - chapter 2), but still web application is based on TCP
+```
+d. Can Client A request multiple resources in a single TCP connection?
+```sh
+Yes, using persistent TCP connection 
+```
+
+P4. Assume that a host receives a UDP segment with 01011101 11110010 (we separated the values of each byte with a space for clarity) as the checksum. The host adds the 16-bit words over all necessary fields excluding the checksum and obtains the value 00110010 00001101. Is the segment considered correctly received or not? What does the receiver do?
+```sh
+Incorrectly so do not receive. Since this is UDP protocol, there is no re-tranmission, therefore it just drops the packet. 
+```
+P7. In protocol rdt3.0, the ACK packets flowing from the receiver to the
+sender do not have sequence numbers (although they do have an ACK field
+that contains the sequence number of the packet they are acknowledging).
+Why is it that our ACK packets do not require sequence numbers?
+```sh
+It would be reduntdant since the protocol already contained the ACK field with number in each packet.
+```
+
+P11. Consider the rdt2.2 receiver in Figure 3.14, and the creation of a new packet in the self-transition (i.e., the transition from the state back to itself) in the Wait-for-0-from-below and the Wait-for-1-from-below states: sndpkt=make_pkt(ACK,1,checksum) and sndpkt=make_pkt(ACK,0,checksum). Would the protocol work correctly if this action were removed from the self-transition in the Wait-for-1-from-below state? Justify your answer. What if this event were removed from the self-transition in the Wait-for-0-from-below state? 
+```sh
+I think yes, since we do not need to acknowledge or verify the data is correct or not to the receiver. 
+
+For 2nd question, then there is no tranmission in the 2nd case. 
+```
+
+P12. The sender side of rdt3.0 simply ignores (that is, takes no action on) all received packets that are either in error or have the wrong value in the acknum field of an acknowledgment packet. Suppose that in such circumstances, rdt3.0 were simply to retransmit the current data packet. Would the protocol still work? (Hint: Consider what would happen if there were only bit errors; there are no packet losses but premature timeouts can occur. Consider how many times the nth packet is sent, in the limit as n approaches infinity.)
+```sh
+Yes, the protocol still works. 
+If there was only bit errors, it keeps retramistting until the right data is coming. 
+The premature timeouts can occurs making this inefficient because it keeps retramissting the current data packet even when it's not necessary. 
+```
+
+P13. Assume Host A is streaming a video from Server B using UDP. Also assume that the network suddenly becomes very congested while Host A is seeing the video. Is there any way to handle this situation with UDP? What about with TCP? Is there any other option?
+```sh
+There is no way to handle the situation. UDP supposed to transmit the data as fast as possible and accepting the packet loss. 
+
+With TCP, it can be re-tranmistted 
+Maybe using QUIC or DASH
+```
+
+P14. Consider a stop-and-wait data-transfer protocol that provides error checking and retransmissions but uses only negative acknowledgments. Assume
+that negative acknowledgments are never corrupted. Would such a protocol
+work over a channel with bit errors? What about over a lossy channel with bit
+errors?
+```sh
+Yes, it still can be worked. 
+With lossy channel (e.g., packets can be lost when sending NACK), then it will cause a delay because sender must wait for the NACK. This can leads to indefinite time. 
+```
+
+P15. Consider the cross-country example shown in Figure 3.17, with a 10 Gbps
+link. How big would the window size have to be for the channel utilization to
+be greater than 98 percent? Suppose that the size of a packet is 1,500 bytes,
+including header fields and data.
+```sh
+Utilization: U 
+R: 10 Gbps 
+L: 1500 bytes = 12000 bits
+
+U = (L/R) / RTT + (L/R)
+0.98 = (1500 * 8 / (10 * 10^9)) / (RTT + (1500 * 8 / (10 * 10^9)))
+=> RTT = (you do the math!) = X 
+
+Window Size = BDP / U where = Y
+BDP (Bandwidth-delay Product) = Bandwidth * RTT = 10^10 * X => Window Size = Y / U 
+```
+
+
+

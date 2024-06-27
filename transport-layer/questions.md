@@ -123,3 +123,20 @@ R16. Consider the Telnet example discussed in Section 3.5. A few seconds after t
 2 segments are sent. 
 Assume we have a segment number is A, then the segment number (sending 'R') will be A + 1 
 ```
+
+## Section 3.7
+R17. Consider two hosts, A and B, transmitting a large file to a server C, over a bottleneck link with rate R. To transfer the file, the hosts use TCP with the same parameters (including MSS and RTT) and start their transmissions at the same time. Host A uses a single TCP connection for the entire file, while Host B uses 9 simultaneous TCP connections, each for a portion (i.e., a chunk) of the file. What is the overall transmission rate achieved by each host at the beginning of the file transfer? Is this situation fair?
+```sh
+Time to transfer from host A: L(A) / R 
+Time to transfer from host B: L(B) / (9R)
+```
+
+R18. True or false? Consider congestion control in TCP. When the timer expires at the sender, the value of ssthresh is set to one half of its previous value.
+```sh
+False. It should be set to one half of the current congestion window size (cwnd)
+```
+R19. According to the discussion of TCP splitting in the sidebar in Section 3.7, the response time with TCP splitting is approximately 4 * RTTFE + RTTBE + processing time, as opposed to 4 * RTT + processing time when a direct connection is used. Assume that RTT BE is 0.5 * RTT. For what values of RTTFE does TCP splitting have a shorter delay than a direct connection?
+```sh
+No idea :D 
+```
+
