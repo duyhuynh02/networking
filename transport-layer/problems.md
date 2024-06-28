@@ -85,5 +85,63 @@ Window Size = BDP / U where = Y
 BDP (Bandwidth-delay Product) = Bandwidth * RTT = 10^10 * X => Window Size = Y / U 
 ```
 
+P19. Suppose Host A and Host B use a GBN protocol with window size N = 3 and a long-enough range of sequence numbers. Assume Host A sends six application messages to Host B and that all messages are correctly received, except for the first acknowledgment and the fifth data segment. Draw a timing diagram (similar to Figure 3.22), showing the data segments and the acknowledgments sent along with the corresponding sequence and acknowledge numbers, respectively.
+```lua
+Host A                      Host B
+  |                           |
+  |--- Seq 0 (0) ------------>|
+  |                           |--- (ACK 0 lost) X
+  |--- Seq 1 (1) ------------>|
+  |                           |<--- ACK 1 --------
+  |--- Seq 2 (2) ------------>|
+  |                           |<--- ACK 2 --------|
+  | (Timeout)                 |
+  |--- Seq 0 (0) (Retransmit)-->|
+  |                           |<--- ACK 0 --------|
+  |--- Seq 3 (3) ------------>|
+  |                           |<--- ACK 3 -------->|
+  |--- Seq 4 (4) ------------>|
+  | (Seq 4 lost)              |--- (ACK 4 not sent)
+  |--- Seq 5 (5) ------------>|
+  |                           |
+  | (Timeout for Seq 4)       |
+  |--- Seq 4 (4) (Retransmit)-->|
+  |                           |<--- ACK 4 --------|
+  |--- Seq 5 (5) ------------>|
+  |                           |<--- ACK 5 --------|
 
+```
 
+P20. Consider a scenario in which Host A and Host B want to send messages to
+Host C. Hosts A and C are connected by a channel that can lose and corrupt
+(but not reorder) messages. Hosts B and C are connected by another channel
+(independent of the channel connecting A and C) with the same properties.
+The transport layer at Host C should alternate in delivering messages from
+A and B to the layer above (that is, it should first deliver the data from a packet
+from A, then the data from a packet from B, and so on). Design a stop-andwait-like error-control protocol for reliably transferring packets from A and
+B to C, with alternating delivery at C as described above. Give FSM descriptions of A and C. (Hint: The FSM for B should be essentially the same as
+for A.) Also, give a description of the packet format(s) used
+```lua
+Host A                 Host C                 Host B 
+   |                    |                       |
+   |--- Seq 0 (0)---->  |                       |
+   |<-- ACK 0 -------   |                       |
+   |                    |<----- Seq 0 (0) ----  |
+   |                    |------- ACK 0 (0)--->  |
+   |---- Seq 1 (1)--->  |---- (ACK 1 not send)  |                           
+   |                    |<----- Seq 1 (1) ----  | 
+   |                    |----- ACK 1 (1) ---->  |
+   | (Timeout)          |                       |
+   |---- Seq 1 (1) retr |<----- ACK 1 (1) ---->
+```
+
+P22. Consider the GBN protocol with a sender window size of 4 and a sequence number range of 1,024. Suppose that at time t, the next in-order packet that the receiver is expecting has a sequence number of k. Assume that the medium does not reorder messages. Answer the following questions:
+
+a. What are the possible sets of sequence numbers inside the sender’s window at time t? Justify your answer.
+```sh
+
+```
+b. What are all possible values of the ACK field in all possible messages currently propagating back to the sender at time t? Justify your answer.
+```sh
+
+```
