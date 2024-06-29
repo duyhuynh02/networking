@@ -139,9 +139,15 @@ P22. Consider the GBN protocol with a sender window size of 4 and a sequence num
 
 a. What are the possible sets of sequence numbers inside the sender’s window at time t? Justify your answer.
 ```sh
-
+{k, k+1, k+1, k+3}
 ```
 b. What are all possible values of the ACK field in all possible messages currently propagating back to the sender at time t? Justify your answer.
 ```sh
+We don't have the re-tranmission, so the best we can get is all 4 ACK. 
+```
 
+P23. Give one example where buffering out-of-order segments would significantly
+improve the throughput of a GBN protocol.
+```sh
+GBN will not send the ACK if one of the packets (e.g., packet 1 lost), then it will add the unneccsary re-tranmission without buffering. 
 ```
