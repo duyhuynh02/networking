@@ -139,7 +139,7 @@ P22. Consider the GBN protocol with a sender window size of 4 and a sequence num
 
 a. What are the possible sets of sequence numbers inside the sender’s window at time t? Justify your answer.
 ```sh
-{k, k+1, k+1, k+3}
+{k, k+1, k+2, k+3}
 ```
 b. What are all possible values of the ACK field in all possible messages currently propagating back to the sender at time t? Justify your answer.
 ```sh
@@ -150,4 +150,29 @@ P23. Give one example where buffering out-of-order segments would significantly
 improve the throughput of a GBN protocol.
 ```sh
 GBN will not send the ACK if one of the packets (e.g., packet 1 lost), then it will add the unneccsary re-tranmission without buffering. 
+```
+
+P24. Consider a scenario where the three hosts A, B, and C are connected as a ring: A to B, B to C, and C to A. Assume that A and C run protocol rdt3.0, whereas B simply relays all messages received from A to C.
+
+a. Does this arrangement enable reliable delivery of messages from A to C?
+```sh
+No this doesn't since B do not have any mechanism to prevent the loss or send the message correctly 
+```
+b. Can B tell if a certain message has been correctly received by A?
+```sh
+No. 
+```
+
+P26. Consider transferring an enormous file of L bytes from Host A to Host B. Assume an MSS of 536 bytes.
+
+a. What is the maximum value of L such that TCP sequence numbers are not exhausted? Recall that the TCP sequence number field has 4 bytes.
+```sh
+The sequence number field is 32 bits long, therfore to calculate the maximum value of L: 2^32 * 4 
+```
+b. For the L you obtain in (a), find how long it takes to transmit the file. Assume that a total of 66 bytes of transport, network, and data-link header are added to each segment before the resulting packet is sent out over a 155 Mbps link. Ignore flow control and congestion control so A can pump out the segments back to back and continuously.
+```sh
+Total numbr of packets in size is: 536 + 66 = 602 * 8 = 4816 bits 
+Time per packet = 4816 / 155 * 10^6 = X seconds 
+Number of packets: 2^32 * 4 / 536 = Y packets 
+Time total = X * Y 
 ```
