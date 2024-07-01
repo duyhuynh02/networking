@@ -176,3 +176,26 @@ Time per packet = 4816 / 155 * 10^6 = X seconds
 Number of packets: 2^32 * 4 / 536 = Y packets 
 Time total = X * Y 
 ```
+
+P27. Host A and B are communicating over a TCP connection following RFC 5681. Host B has already received from A all bytes up through byte 96. Suppose Host A then sends two segments to Host B back-to-back. The first segment and the second segments contain 40 and 80 bytes of data, respectively. In the first segment, the sequence number is 97, the source port number is 302, and the destination port number is 80. Host B sends an acknowledgment whenever it receives a segment from Host A.
+
+a. In the second segment sent from Host A to B, what are the sequence number, source port number, and destination port number?
+```sh
+Sequence number: 137
+Src port number: 302
+Des port number: 80 
+```
+b. If the first segment arrives before the second segment, in the acknowledgment of the first arriving segment, what is the acknowledgment number, the source port number, and the destination port number?
+```sh
+Acknowledgment number: 137 
+Src port number: 80 
+Des port number: 302
+```
+c. If the second segment arrives before the first segment, in the acknowledgment of the first arriving segment, what is the acknowledgment number?
+```sh
+Acknowledgement number: 97
+```
+d. Suppose the two segments sent by A arrive in order at B. The first acknowledgment arrives after the first timeout interval. What is the sequence number of the next segment that A will transmit?
+```sh
+Sequence number: 137 (re-send the first segment due to the timeout)
+```
