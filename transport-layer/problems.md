@@ -199,3 +199,75 @@ d. Suppose the two segments sent by A arrive in order at B. The first acknowledg
 ```sh
 Sequence number: 137 (re-send the first segment due to the timeout)
 ```
+
+P29. SYN cookies were discussed in Section 3.5.6.
+a. Why is it necessary for the server to use a special initial sequence number in the SYNACK?
+```sh
+To verify and to make sure that the server do not contain the flood attacks 
+```
+b. Suppose an attacker knows that a target host uses SYN cookies. Can the attacker create half-open or fully open connections by simply sending an ACK packet to the target? Why or why not?
+```sh
+No, because when server create the SYN cookie, it will contain the sequence number, all the information, and hash cryptography. Therefore, it would be impossible for the attacker create half-open or fully open connections. 
+```
+c. Suppose an attacker collects a large amount of initial sequence numbers sent
+by the server. Can the attacker cause the server to create many fully open
+connections by sending ACKs with those initial sequence numbers? Why?
+```sh
+No, see #b 
+```
+
+P31. Suppose that the five measured SampleRTT values (see Section 3.5.3) are 112 ms, 140 ms, 110 ms, 90 ms, and 90 ms. 
+
+Compute the EstimatedRTT after each of these SampleRTT values is obtained, using a value of α = 0.125 and assuming that the value of EstimatedRTT was 120 ms just before the first of these five samples were obtained. 
+```sh
+EstimatedRTT = (1 – α) * EstimatedRTT + α * SampleRTT
+112 -> 119.0 
+140 -> 121.625 
+110 -> 120.171875
+90 -> 116.400390625
+```
+
+Compute also the DevRTT after each sample is obtained, assuming a value of b = 0.25 and assuming the value of DevRTT was 6 ms just before the first of these five samples was obtained.
+```sh
+DevRTT = (1 – β) * DevRTT + β * | SampleRTT – EstimatedRTT |
+
+You do the math
+
+```
+Finally, compute the TCP TimeoutInterval after each of these samples is obtained
+```sh
+TimeoutInterval = EstimatedRTT + 4 * DevRTT 
+```
+
+P37. Compare GBN, SR, and TCP (no delayed ACK). Assume that the timeout values for all three protocols are sufficiently long such that five consecutive data segments and their corresponding ACKs can be received (if not lost in the channel) by the receiving host (Host B) and the sending host (Host A) respectively. Suppose Host A sends five data segments to Host B, and the second segment (sent from A) is lost. In the end, all five data segments have been correctly received by Host B.
+
+a. How many segments has Host A sent in total and how many ACKs has Host B sent in total? What are their sequence numbers? Answer this question for all three protocols.
+```sh
+GBN:
+ - Segments sent by host A: 9 (1, 2, 3, 4, 5 then 2, 3, 4, 5)
+ - ACKs sent by host B:  5 (ACK2, ACK3, ACK4, ACK5, ACK6)
+
+SR:
+ - Segments sent by host A: 6 (1, 2, 3, 4, 5 then 2)
+ - ACKs sent by host B: 5 (ACK3, ACK4, ACK5, ACK6, ACK2)
+
+TCP:
+ - Segments sent by host A: 6 (1, 2, 3, 4, 5, then 2)
+ - ACKs sent by host B: 8 (ACK 2 initially, 3 duplicate ACKs (ACK2) for segments 3, 4,5, and ACK 6 after re-tranmission)
+```
+b. If the timeout values for all three protocol are much longer than 5 RTT,
+then which protocol successfully delivers all five data segments in shortest time interval?
+```sh
+Should be SR if we summarize the ACKs sent and the segments sent, no? 
+```
+
+P38. In our description of TCP in Figure 3.53, the value of the threshold,
+ssthresh, is set as ssthresh=cwnd/2 in several places and
+ssthresh value is referred to as being set to half the window size when a
+loss event occurred. Must the rate at which the sender is sending when the
+loss event occurred be approximately equal to cwnd segments per RTT?
+Explain your answer. If your answer is no, can you suggest a different
+manner in which ssthresh should be set?
+```sh
+
+```
