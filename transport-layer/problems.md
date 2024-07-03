@@ -261,13 +261,98 @@ then which protocol successfully delivers all five data segments in shortest tim
 Should be SR if we summarize the ACKs sent and the segments sent, no? 
 ```
 
-P38. In our description of TCP in Figure 3.53, the value of the threshold,
-ssthresh, is set as ssthresh=cwnd/2 in several places and
-ssthresh value is referred to as being set to half the window size when a
-loss event occurred. Must the rate at which the sender is sending when the
-loss event occurred be approximately equal to cwnd segments per RTT?
-Explain your answer. If your answer is no, can you suggest a different
-manner in which ssthresh should be set?
+P40. Consider Figure 3.61. Assuming TCP Reno is the protocol experiencing the behavior shown above, answer the following questions. In all cases, you should provide a short discussion justifying your answer.
+a. Identify the intervals of time when TCP slow start is operating.
+```sh
+Round 1 to round 6. The congestion window (cwnd) grows rapidly from 1 segment to 32 segments, appx. 
+```
+b. Identify the intervals of time when TCP congestion avoidance is operating.
+```sh
+Round 7 to round 16 
+```
+c. After the 16th transmission round, is segment loss detected by a triple
+duplicate ACK or by a timeout?
+```sh
+Triple duplicate ACK -> trigger a fast retransmit and fast recovery in TCP Reno 
+```
+d. After the 22nd transmission round, is segment loss detected by a triple
+duplicate ACK or by a timeout?
+```sh
+Timeout -> the cwnd reset to 1 as per the behavior of the TCP Reno 
+```
+e. What is the initial value of ssthresh at the first transmission round?
+```sh
+Cwnd / 2 ~ Around 22 or 23 
+```
+f. What is the value of ssthresh at the 22nd transmission round?
+```sh
+Reset to 1 
+```
+g. During what transmission round is the 70th segment sent?
+```sh
+Round 7 
+```
+h. Assuming a packet loss is detected after the 26th round by the receipt of
+a triple duplicate ACK, what will be the values of the congestion window
+size and of ssthresh?
+```sh
+ssthresh: 7 or 8 / 2 = 4 
+window size cwnd: 4 + 3 (ACK) = 7 
+```
+i. Suppose TCP Tahoe is used (instead of TCP Reno), and assume that triple
+duplicate ACKs are received at the 10th round. What are the ssthresh
+and the congestion window size at the 11th round?
+```sh
+ssthresh: 38 / 2 = 19 
+cwnd: 1 (set cwnd to 1 segment for Tahoe at the 11th round)
+```
+j. Again, suppose TCP Tahoe is used, and there is a timeout event at the 22nd
+round. How many packets have been sent out from the 17th round till the
+22nd round, inclusive?
+```sh
+R17: cwnd = 20
+R18: cwnd = 21
+R19: cwnd = 22 
+R20: cwnd = 23
+R21: cwnd = 1 
+R22: cwnd = 2
+
+Total packets sent = 20 + 21 + 22 + 23 + 1 + 2 = 89 packets
+```
+
+P43. Host A is sending an enormous file to Host B over a TCP connection. Over
+this connection there is never any packet loss and the timers never expire.
+Denote the transmission rate of the link connecting Host A to the Internet by
+R bps. Suppose that the process in Host A is capable of sending data into its
+TCP socket at a rate S bps, where S = 10 * R. Further suppose that the TCP
+receive buffer is large enough to hold the entire file, and the send buffer can
+hold only one percent of the file. What would prevent the process in Host
+A from continuously passing data to its TCP socket at rate S bps? TCP flow
+control? TCP congestion control? Or something else? Elaborate.
+```
+Transmission rate: R bps
+A send data through socket S = 10 * R 
+TCP receive buffer: 1%F 
+
+Then it would be TCP congestion control because:
+1. The TCP receive buffer is large enough to hold the entire file 
+2. The speed of sending data is fast, S = 10 * R will catch up at any time, therefore we need to use congestion control to manage it. 
+
+(Or could be use 2 methods at the same scenario, i guess it would work!!!)
+```
+
+P44. Consider sending a large file from a host to another over a TCP connection
+that has no loss.
+
+a. Suppose TCP uses AIMD for its congestion control without slow start.
+Assuming cwnd increases by 1 MSS every time a batch of ACKs is
+received and assuming approximately constant round-trip times, how long
+does it take for cwnd increase from 6 MSS to 12 MSS (assuming no loss
+events)?
+```sh
+
+```
+b. What is the average throughput (in terms of MSS and RTT) for this connection up through time = 6 RTT?
 ```sh
 
 ```
