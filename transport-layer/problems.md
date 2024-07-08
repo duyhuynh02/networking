@@ -350,9 +350,22 @@ received and assuming approximately constant round-trip times, how long
 does it take for cwnd increase from 6 MSS to 12 MSS (assuming no loss
 events)?
 ```sh
-
+6
 ```
 b. What is the average throughput (in terms of MSS and RTT) for this connection up through time = 6 RTT?
 ```sh
+Total data / total time = All the data (6MSS + 7MSS +... + 12MSS) / 6RTT
+```
 
+![alt text](image.png)
+```sh
+a) From connection's rate varies from W/(2*RTT) to W/RTT, total packets sent would be 1/2 * (W + W/2) * RTT 
+
+Only one packet is lost -> L = 1 / total packets sent = 1 / (3/4W * RTT) = the formulate on P47. 
+```
+
+```sh
+Average rate = W / RTT 
+From a) we can found W -> 1/L = 3/8W^2 + 3/4W 
+Then we replace it.
 ```
