@@ -132,22 +132,18 @@ class EntityA:
     # Called from layer 3, when a packet arrives for layer 4 at EntityA.
     # The argument `packet` is a Pkt containing the newly arrived packet.
     def input(self, packet):
-        if not self.is_corrupted(packet) and packet.acknum == self.acknum_expected:
-            print('1')
-            self.state = 0 
-            self.seqnum += 1
-            self.acknum += 1 
-            self.acknum_expected += 1 
-            stop_timer(self)
-        elif self.is_corrupted(packet) or packet.acknum != self.acknum_expected:
-            print('2')
-            print('packet number: ', packet.acknum)
-            print('self expecter number: ', self.acknum_expected)
-            pass
-        else:
-            print('3')
-            to_layer3(self, self.packet_to_retransfer)
-            start_timer(self, self.time_out)
+        if self.state == 1: 
+            if not self.is_corrupted(packet) and packet.acknum == self.acknum_expected:
+                self.state = 0 
+                self.seqnum += 1
+                self.acknum += 1 
+                self.acknum_expected += 1 
+                stop_timer(self)
+            elif self.is_corrupted(packet) or packet.acknum != self.acknum_expected:
+                pass
+            else:
+                to_layer3(self, self.packet_to_retransfer)
+                start_timer(self, self.time_out)
 
     # Called when A's timer goes off.
     def timer_interrupt(self):
@@ -165,7 +161,7 @@ class EntityA:
     def is_corrupted(self, packet):
         total = sum([ord(c) for c in packet.payload.decode('utf-8')])
         checksum_checking = packet.seqnum + packet.acknum + total 
-        return checksum_checking == self.checksum
+        return checksum_checking != self.checksum
 
 class EntityB:
     # The following method will be called once (only) before any other
@@ -173,20 +169,19 @@ class EntityB:
     #
     # See comment above `EntityA.__init__` for the meaning of seqnum_limit.
     def __init__(self, seqnum_limit):
-        self.seqnum = 0         
-        self.acknum = 0 
-        self.checksum = 0 
+        self.seqnum_expect = 0         
 
     # Called from layer 3, when a packet arrives for layer 4 at EntityB.
     # The argument `packet` is a Pkt containing the newly arrived packet.
     def input(self, packet):
-        self.checksum = self.compute_checksum(packet.payload)
-        if not self.is_corrupted(packet) and self.seqnum == packet.seqnum: 
-            to_layer5(self, packet.payload)
-            self.seqnum += 1 
-            self.acknum += 1 
-        ack_or_nonack_packet = self.create_packet(packet)
-        to_layer3(self, ack_or_nonack_packet)
+        if not self.is_corrupted(packet) and self.seqnum_expect == packet.seqnum: 
+            to_layer5(self, Msg(packet.payload))
+            ack_packet = self.create_packet(packet)
+            self.seqnum_expect += 1 
+            to_layer3(self, ack_packet)
+        else: 
+            nack_packet = self.create_packet(packet)
+            to_layer3(self, nack_packet)
 
     # Called when B's timer goes off.
     def timer_interrupt(self):
@@ -198,13 +193,13 @@ class EntityB:
         return checksum 
 
     def create_packet(self, packet):
-        receiver_packet = Pkt(self.seqnum, self.acknum, self.checksum, packet.payload)
+        receiver_packet = Pkt(self.seqnum_expect, packet.acknum, packet.checksum, packet.payload)
         return receiver_packet
 
     def is_corrupted(self, packet):
         total = sum([ord(c) for c in packet.payload.decode('utf-8')])
         checksum_checking = packet.seqnum + packet.acknum + total 
-        return checksum_checking == self.checksum
+        return checksum_checking != packet.checksum
 
 ###############################################################################
 
