@@ -369,3 +369,44 @@ Average rate = W / RTT
 From a) we can found W -> 1/L = 3/8W^2 + 3/4W 
 Then we replace it.
 ```
+
+P48. Consider that only a single TCP (Reno) connection uses one 54 Mbps wireless link which does not buffer any data. Suppose that this link is the only congested link between the sending and receiving hosts. Assume that the TCP sender has a huge file to send to the receiver and the receiver’s receive buffer is much larger than the congestion window. We also make the following assumptions: each TCP segment size is 536 bytes; the two-way propagation delay of this connection is 6 msec; and this TCP connection is always in congestion avoidance phase, that is, ignore slow start.
+a. What is the maximum window size (in segments) that this TCP connection can achieve?
+```sh
+cwnd = Bandwidth * RTT = 54 * 10^6 * 6 / 10^3 = 324000 bits = 40500 bytes 
+maximum window size = 40500 / 536 bytes/segment ~ 75 segments 
+```
+b. What is the average window size (in segments) and average throughput (in bps) of this TCP connection?
+```sh
+Maximum window size / 2 < Average < Maximum window size 
+=> W(Avg) = Wmax + Wmax/2 / 2 = 3W/4 
+
+Throughput = W(avg) * segment size / RTT = 
+```
+c. How long would it take for this TCP connection to reach its maximum window again after recovering from a packet loss?
+```sh
+To reach its maximum window again after recovering from a packet loss, that means the window size now is W/2 
+
+From Wmax/2 to Wmax, we need Wmax - Wmax/2 = 75 - 37.5 = 37.5segments to get a number of segments to increase 
+Total time = number of segments to increase * RTT = 37.5 * 6 / 10 ^ 3 = 0.225s 
+```
+
+P53. Consider the network described in the previous problem. Now suppose that the two TCP connections, C1 and C2, have the same RTT of 100 msec. Suppose that at time t0, C1’s congestion window size is 15 segments but C2’s congestion window size is 10 segments.
+a. What are their congestion window sizes after 2200 msec?
+```sh
+
+```
+b. In the long run, will these two connections get about the same share of the
+bandwidth of the congested link?
+```sh
+
+```
+c. We say that two connections are synchronized, if both connections reach their maximum window sizes at the same time and reach their minimum window sizes at the same time. In the long run, will these two connections get synchronized eventually? If so, what are their maximum window sizes?
+```sh
+
+```
+d. Will this synchronization help to improve the utilization of the shared
+link? Why? Sketch some idea to break this synchronization.
+```sh
+
+```
