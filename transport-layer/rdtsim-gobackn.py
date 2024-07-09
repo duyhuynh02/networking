@@ -106,7 +106,10 @@ class EntityA:
     # zero and seqnum_limit-1, inclusive.  E.g., if seqnum_limit is 16, then
     # all seqnums must be in the range 0-15.
     def __init__(self, seqnum_limit):
+        self.list_of_packets = []
         self.next_seq_num = 0 
+        self.checksum = 0 
+        self.acknum = 0 
         self.base = 0 
         self.N = 4 
         self.timer = 10.0 
@@ -114,25 +117,47 @@ class EntityA:
     # Called from layer 5, passed the data to be sent to other side.
     # The argument `message` is a Msg containing the data to be sent.
     def output(self, message):
-        # Nếu (nextseqnum < base + N) 
         if (self.next_seq_num < self.base + self.N):
-        #   sendpacket[nextseqnum] = make_pkt(nextseqnum, data, checksum)
-
-        #   udt_send(sendpacket[nextseqnum]) 
-        #   Nếu (base == nextseqnum) 
-        #     start_timer 
-        #   nextseqnum++ 
-        # Còn ko thì:
+            packet = self.create_packet(message.data)
+            self.list_of_packets.append(packet)     #buffering 
+            to_layer3(self, packet)
+            if self.base == self.next_seq_num:
+                start_timer(self, self.timer) 
+            self.next_seq_num += 1
+        else: 
         #   refuse_data(data)
+            self.time_out() 
 
     # Called from layer 3, when a packet arrives for layer 4 at EntityA.
     # The argument `packet` is a Pkt containing the newly arrived packet.
     def input(self, packet):
-        pass
+        if not self.is_corrupted(packet):
+            self.base = packet.seqnum + 1 
+            if self.base == self.next_seq_num:
+                stop_timer(self)
+            else:
+                start_timer(self, self.timer)
+        else:
+            pass 
 
     # Called when A's timer goes off.
     def timer_interrupt(self):
         pass
+
+    def create_packet(self, payload):
+        packet = Pkt(self.next_seq_num, self.acknum, self.checksum, payload)
+        return packet
+    
+    def is_corrupted(self, packet):
+        total = sum([ord(c) for c in packet.payload.decode('utf-8')])
+        checksum_checking = packet.seqnum + packet.acknum + total 
+        return checksum_checking != self.checksum
+    
+    def time_out(self):
+        start_timer(self, self.timer)
+        for i in range(self.base, self.next_seq_num):
+            to_layer3(self, self.list_of_packets[i])
+
 
 class EntityB:
     # The following method will be called once (only) before any other
@@ -140,16 +165,29 @@ class EntityB:
     #
     # See comment above `EntityA.__init__` for the meaning of seqnum_limit.
     def __init__(self, seqnum_limit):
-        pass
+        self.expected_seq_num = 0 
 
     # Called from layer 3, when a packet arrives for layer 4 at EntityB.
     # The argument `packet` is a Pkt containing the newly arrived packet.
     def input(self, packet):
-        pass
+        if not self.is_corrupted(packet) and packet.seqnum == self.expected_seq_num:
+            to_layer5(self, Msg(packet.payload))
+            ack_packet = self.create_packet(packet) 
+            to_layer3(self, ack_packet)
+            self.expected_seq_num += 1 
 
     # Called when B's timer goes off.
     def timer_interrupt(self):
         pass
+
+    def create_packet(self, packet):
+        receiver_packet = Pkt(self.expected_seq_num, packet.acknum, packet.checksum, packet.payload)
+        return receiver_packet
+
+    def is_corrupted(self, packet):
+        total = sum([ord(c) for c in packet.payload.decode('utf-8')])
+        checksum_checking = packet.seqnum + packet.acknum + total 
+        return checksum_checking != packet.checksum
 
 ###############################################################################
 
