@@ -392,21 +392,27 @@ Total time = number of segments to increase * RTT = 37.5 * 6 / 10 ^ 3 = 0.225s
 ```
 
 P53. Consider the network described in the previous problem. Now suppose that the two TCP connections, C1 and C2, have the same RTT of 100 msec. Suppose that at time t0, C1’s congestion window size is 15 segments but C2’s congestion window size is 10 segments.
+```
+Increase by one segment in each RTT 
+C1, C2: RTT = 100 msec 
+t0: C1 cwnd: 15 segments
+t0: C2 cwnd: 10 segments 
+```
 a. What are their congestion window sizes after 2200 msec?
 ```sh
-
+After 2200 / 100 = 22 RTT, we have C1: 37 and C2: 32 segmenets
 ```
 b. In the long run, will these two connections get about the same share of the
 bandwidth of the congested link?
 ```sh
-
+Yes. 
 ```
 c. We say that two connections are synchronized, if both connections reach their maximum window sizes at the same time and reach their minimum window sizes at the same time. In the long run, will these two connections get synchronized eventually? If so, what are their maximum window sizes?
 ```sh
-
+No idea
 ```
 d. Will this synchronization help to improve the utilization of the shared
 link? Why? Sketch some idea to break this synchronization.
 ```sh
-
+Ok i have no idea. 
 ```
