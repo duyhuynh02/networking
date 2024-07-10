@@ -6,7 +6,7 @@ Online lectures and review questions can be found here: [Lectures](https://gaia.
 ## Agenda 
 1. [Computer Networks and The Internet](https://github.com/duyhuynh02/networking/tree/main/comp-network-and-the-internet)
 2. [The Application Layer](https://github.com/duyhuynh02/networking/tree/main/application-layer)
-3. The Transport Layer 
+3. [The Transport Layer](https://github.com/duyhuynh02/networking/tree/main/transport-layer)
 4. The Network Layer: the Data Plane 
 5. The Network Layer: the Control Plane 
 6. The Link Layer 
