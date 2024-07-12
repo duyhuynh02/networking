@@ -165,23 +165,25 @@ Yes, isn't it obivious?
 ## Section 4.4
 R32. How does generalized forwarding differ from destination-based forwarding?
 ```sh
-
+More complex therefore more options/playgrounds to work on, locals have more actions to choose: forward, drop, modify, etc... 
 ```
 R33. What is the difference between a forwarding table that we encountered in
 destination-based forwarding in Section 4.1 and OpenFlow’s flow table that
 we encountered in Section 4.4?
 ```sh
-
+See R32
 ```
 R34. What is meant by the “match plus action” operation of a router or switch? In
 the case of destination-based forwarding packet switch, what is matched and
 what is the action taken? In the case of an SDN, name three fields that can be
 matched, and three actions that can be taken.
 ```sh
+Different with destination-based forwarding, the match plus action tries to match with specific header values (ip addresses, port numbers,...). Based on these values, the router/switch decides to do the "actions". 
 
+3 fields: source ip, dest ip, protocol type 
+3 actions: forwarding, dropping, modifying 
 ```
-R35. Name three header fields in an IP datagram that can be “matched” in OpenFlow 1.0 generalized forwarding. What are three IP datagram header fields
-that cannot be “matched” in OpenFlow?
+R35. Name three header fields in an IP datagram that can be “matched” in OpenFlow 1.0 generalized forwarding. What are three IP datagram header fields that cannot be “matched” in OpenFlow?
 ```sh
-
+Version, Header Length, and Total length 
 ```
