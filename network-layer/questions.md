@@ -86,41 +86,44 @@ When weight is the same for all the packets.
 ## Section 4.3
 R17. Suppose Host A sends Host B a TCP segment encapsulated in an IP datagram. When Host B receives the datagram, how does the network layer in Host B know it should pass the segment (that is, the payload of the datagram) to TCP rather than to UDP or to some other upper-layer protocol?
 ```sh
-
+There is a field on IP datagram format call upperlayer where the network layer in B can check whether it uses TCP/UDP
 ```
 R18. What field in the IP header can be used to ensure that a packet is forwarded through no more than N routers?
 ```sh
-
+Time To Live (TTL)
 ```
-R19. Recall that we saw the Internet checksum being used in both transport-layer segment (in UDP and TCP headers, Figures 3.7 and 3.29 respectively) and in network-layer datagrams (IP header, Figure 4.17). Now consider a transport layer segment encapsulated in an IP datagram. Are the checksums in the segment header and datagram header computed over any common bytes in the IP
-datagram? Explain your answer.
+R19. Recall that we saw the Internet checksum being used in both transport-layer segment (in UDP and TCP headers, Figures 3.7 and 3.29 respectively) and in network-layer datagrams (IP header, Figure 4.17). Now consider a transport layer segment encapsulated in an IP datagram. Are the checksums in the segment header and datagram header computed over any common bytes in the IP datagram? Explain your answer.
 ```sh
-
+Nah that's 2 different checksum for each layer 
 ```
 
 R20. When a large datagram is fragmented into multiple smaller datagrams, where are these smaller datagrams reassembled into a single larger datagram?
 ```sh
-
+Network layer in the receiver (destination host) use fragmentation offset and identification number
+IN: ensures that all the fragments of a single datagram share the same value 
+Fragment offset: indicates the position of each fragment within the original datagram 
 ```
 R21. How many IP addresses does a router have?
 ```sh
-
+Based on the interfaces, but mostly it contains 2 including WAN and LAN
 ```
 R22. What is the 32-bit binary equivalent of the IP address 202.3.14.25?
 ```sh
-
+DIY, turn decimal to binary. 
 ```
 R23. Visit a host that uses DHCP to obtain its IP address, network mask, default router, and IP address of its local DNS server. List these values.
 ```sh
-
+DIY 
 ```
 R24. Suppose there are four routers between a source host and a destination host. Ignoring fragmentation, an IP datagram sent from the source host to the destination host will travel over how many interfaces? How many forwarding tables will be indexed to move the datagram from the source to the destination?
 ```sh
-
+Interfaces: 10 (2 for each routers and 1 for src/dest)
+How many forwarding tables: 4 
 ```
 R25. Suppose an application generates chunks of 40 bytes of data every 20 msec, and each chunk gets encapsulated in a TCP segment and then an IP datagram. What percentage of each datagram will be overhead, and what percentage will be application data?
 ```sh
-
+% of overhead = (20 + 20 / 80) = 50% 
+% of application = 40 / 80 = 50% 
 ```
 R26. Suppose you purchase a wireless router and connect it to your cable modem.
 Also suppose that your ISP dynamically assigns your connected device (that
@@ -129,32 +132,34 @@ at home that use 802.11 to wirelessly connect to your wireless router. How
 are IP addresses assigned to the five PCs? Does the wireless router use NAT?
 Why or why not?
 ```sh
-
+Each will have the prefix of IP based on the specifications on a wireless router. 
+Yes, it still uses NAT to translate from many IPs just for 1 IP to the outsiders. 
 ```
 R27. What is meant by the term “route aggregation”? Why is it useful for a router
 to perform route aggregation?
 ```sh
-
+It involves combining multiple specific IP routes (subnets) into a single, broarder route -> improve network efficiency, reduces overhead, and ensures stable routing. 
 ```
 R28. What is meant by a “plug-and-play” or “zeroconf” protocol?
 ```sh
-
+Plug-and-play: new comer (or device/host/whatever) will come and will be accepted in a new network without much restriction or setup
+Zeroconf: automatically create an usable computer network that based on the TCP/IP when devices are interconnected. 
 ```
 R29. What is a private network address? Should a datagram with a private network
 address ever be present in the larger public Internet? Explain.
 ```sh
-
+Private network address is a network without connection to a larger public Internet. No, with private network (assume LAN), the computers/hosts are connected to each other. 
 ```
 R30. Compare and contrast the IPv4 and the IPv6 header fields. Do they have any
 fields in common?
 ```sh
-
+Virtually, except the fragmentation and ... (forgot, lazy too check!) 
 ```
 R31. It has been said that when IPv6 tunnels through IPv4 routers, IPv6 treats the
 IPv4 tunnels as link-layer protocols. Do you agree with this statement? Why
 or why not?
 ```sh
-
+Yes, isn't it obivious? 
 ```
 
 ## Section 4.4
