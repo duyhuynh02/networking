@@ -105,11 +105,70 @@ P17. Suppose datagrams are limited to 1,500 bytes (including header) between sou
 P18. Consider the network setup in Figure 4.25. Suppose that the ISP instead assigns the router the address 24.34.101.225 and that the network address of the home network is 192.168.0/24.
 a. Assign addresses to all interfaces in the home network.
 ```sh
-Network address range is: 129.168.0.0 -> 129.168.255.255 
+The Router's external interface (WAN) is 24.34.101.225
+Router's internal interface (LAN) is 192.168.0.1 (first address)
+Network address range is: 129.168.0.2 -> 129.168.255.255 
 ```
 b. Suppose each host has two ongoing TCP connections, all to port 80 at
 host 128.119.40.86. Provide the six corresponding entries in the NAT
 translation table.
 ```sh
+NAT Table
+```
 
+| Internal IP | External IP | Destination IP | 
+|-------------|-------------|----------------|
+|192.168.0.2:1025|24.34.101.225:4000 (any port value you want)|128.119.40.86:80
+|192.168.0.2.1026|24.34.101.225:4001|128.119.40.86:80
+|192.168.0.3.1025|24.34.101.225:4002|128.119.40.86:80
+|192.168.0.3.1026|24.34.101.225:4003|128.119.40.86:80
+|192.168.0.4.1025|24.34.101.225:4004|128.119.40.86:80
+|192.168.0.4.1026|24.34.101.225:4005|128.119.40.86:80
+
+P20. In this problem, we’ll explore the impact of NATs on P2P applications.
+Suppose a peer with username Arnold discovers through querying that a
+peer with username Bernard has a file it wants to download. Also suppose
+that Bernard and Arnold are both behind a NAT. Try to devise a technique
+that will allow Arnold to establish a TCP connection with Bernard without
+application-specific NAT configuration. If you have difficulty devising such
+a technique, discuss why
+```sh
+Use a technique called "Hole punching", basically it's like setting up an immedaitery to connect both Bernard and Arnold. 
+```
+
+## Figure 4.30
+![alt text](image.png)
+
+P21. Consider the SDN OpenFlow network shown in Figure 4.30. Suppose that the desired forwarding behavior for datagrams arriving at s2 is as follows:
+
+• any datagrams arriving on input port 1 from hosts h5 or h6 that are destined to hosts h1 or h2 should be forwarded over output port 2;
+
+| Match | Action |
+|-------|--------|
+|IP Src = 10.3.0.6; IP Dst = 10.1.0.1 | Forward(3)
+
+
+• any datagrams arriving on input port 2 from hosts h1 or h2 that are destined to hosts h5 or h6 should be forwarded over output port 1;
+
+| Match | Action |
+|-------|--------|
+|IP Src = 10.1.0.1; IP Dst = 10.3.0.5 or 10.3.0.6| Forward(1)
+
+• any arriving datagrams on input ports 1 or 2 and destined to hosts h3 or h4
+should be delivered to the host specified;
+| Match | Action |
+|-------|--------|
+|IP Src = 10.1.0.1; IP Dst = 10.3.0.5 or 10.3.0.6| Forward(1)
+
+• hosts h3 and h4 should be able to send datagrams to each other. Specify the flow table entries in s2 that implement this forwarding behavior.
+| Match | Action |
+|-------|--------|
+|IP Src = 10.2.0.3 | 10.02.0.4; IP Dst = 10.2.0.4 or 10.2.0.3| Forward(4) | Forward(3) 
+
+(P22 + P23 + P24 is the same problem).
+
+P25. Consider the Internet protocol stack in Figures 1.23 and 4.31. Would you
+consider the ICMP protocol to be a network-layer protocol or a transportlayer protocol? Justify your answer.
+```sh
+IMCP protocol is a protocol for network devices (routers, switches, and hosts) need to convey messages -> network layer protocol. 
 ```
