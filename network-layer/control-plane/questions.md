@@ -70,5 +70,5 @@ N/A
 ```
 R13. True or false: When a BGP router receives an advertised path from its neighbor, it must add its own identity to the received path and then send that new path on to all of its neighbors. Explain
 ```sh
-True 
+False, it's a policy-based routing protocol so it should be not a restrict to add its own identity... 
 ```
