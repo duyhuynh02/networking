@@ -38,3 +38,37 @@ R6. How is a least cost path calculated in a decentralized routing algorithm?
 By update itself and inform the cost to the neighbors
 ```
 
+## Sections 5.3–5.4
+R7. Why are different inter-AS and intra-AS protocols used in the Internet?
+```sh
+Inter: Global (international?)
+Intra: Local
+```
+R8. True or false: When an OSPF route sends its link state information, it is sent only to those nodes directly attached neighbors. Explain.
+```sh
+False. OSPF tried to find the least cost. OSPF propagates all the network.
+```
+R9. What is meant by an area in an OSPF autonomous system? Why was the concept of an area introduced?
+```sh
+Due to link state advertisement, the concept of area means directly connected links, interfaces, and neighbors. 
+```
+R10. Define and contrast the following terms: subnet, prefix, and BGP route.
+```sh
+Subnet: a sub network 
+Prefix: refers to an original IP address which indicate the network segment
+BGP route: can be iBGP (use internal) or eBGP (use external) for propagation purpose 
+```
+R11. How does BGP use the NEXT-HOP attribute? How does it use the AS-PATH attribute?
+```sh
+NEXT-HOP attribute uses to determine which interface to use for forwarding packets to the specificied destination. 
+
+AS-PATH: indicate a list of AS numbers which the BGP update has already traversed. 
+```
+R12. Describe how a network administrator of an upper-tier ISP can implement policy when configuring BGP.
+```sh
+N/A 
+```
+R13. True or false: When a BGP router receives an advertised path from its neighbor, it must add its own identity to the received path and then send that new path on to all of its neighbors. Explain
+```sh
+True 
+```
