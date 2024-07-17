@@ -72,3 +72,61 @@ R13. True or false: When a BGP router receives an advertised path from its neigh
 ```sh
 False, it's a policy-based routing protocol so it should be not a restrict to add its own identity... 
 ```
+
+## SECTION 5.5
+R14. Describe the main role of the communication layer, the network-wide state management layer, and the network-control application layer in an SDN controller.
+```sh
+Communication layer: involved a communication between a SDN controller and controled network devices 
+Network-wide state management layer: The control decisisions made by the SDN control plane 
+Network-control application layer: interacts with network-control apps, allow to read/write network state and flow tables within the state-management layer 
+```
+
+R15. Suppose you wanted to implement a new routing protocol in the SDN control plane. At which layer would you implement that protocol? Explain.
+```sh
+Network-wide state management layer 
+```
+R16. What types of messages flow across an SDN controller’s northbound and southbound APIs? Who is the recipient of these messages sent from the controller across the southbound interface, and who sends messages to the controller across the northbound interface?
+```sh
+Northbound API: from controller to application -> topology info, flow statistics, event notifications, policy update e.g., RESTful API, OpenFlow, NETCONF,...
+Southbound API: from controller to network devices -> flow installation, topology discovery, group configuration, port configuration e.g.,, OpenFlow,...
+```
+R17. Describe the purpose of two types of OpenFlow messages (of your choosing) that are sent from a controlled device to the controller. Describe the purpose of two types of Openflow messages (of your choosing) that are send from the controller to a controlled device.
+```sh
+Modify-State: add/delete or modify entries values from switch's flow table and ports
+Read-state: send a specific packet out of a specified port at the controller switch. 
+```
+R18. What is the purpose of the service abstraction layer in the OpenDaylight SDN
+controller?
+```sh
+Is controller's nerver center, use for allowing controllers component and application to invoke each's other 
+```
+
+## SECTIONs 5.6–5.7
+R19. Names four different types of ICMP messages
+```sh
+0 -> echo reply (to ping)
+3 -> based on the code we will have ethe destination 
+4 -> source quench (congestion control)
+8 -> echo request 
+```
+R20. What two types of ICMP messages are received at the sending host executing the Traceroute program?
+```sh
+Type 11 code 0: TTL value 
+Type 3 code 3: unreachable destination port 
+```
+R21. Define the following terms in the context of SNMP: managing server, managed device, network management agent and MIB.
+```sh
+Managing server: control the collections, process, analyze and dispatch network management information and commands
+Managed device: a pice of network equipment e.g., host, router, switch, middlebox, modem,...
+Network management agent: software process in a managed device that communicates with the managing server, taking local actions at the managed device under the command and control of the managing server 
+MIB: Management information base 
+```
+R22. What are the purposes of the SNMP GetRequest and SetRequest messages?
+```sh
+GetRequest: get value of one or more MIB object instances
+SetRequest: set value of one or more MIB object instances 
+```
+R23. What is the purpose of the SNMP trap message?
+```sh
+Serves as an unsolicited communication trom a network device to an SNMP management system -> allow for proactive monitoring, rapid incident response. 
+```
