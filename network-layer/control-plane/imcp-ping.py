@@ -40,14 +40,6 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
     while 1:
         startedSelect = time.time()         #record a current time, use to measure how long the select call takes 
         whatReady = select.select([mySocket], [], [], timeLeft) #use to monitor the socket for incoming data
-        #1st arg: list of sockets to monitor for readability
-        #2nd arg: list of sockets to monitor for writability
-        #3rd arg: list of sockets for exceptional conditions
-        #4th arg: timeout 
-        #will return for whatReady 3 lists: first list contains the sockets which are ready for reading 
-        #2nd list contains the socket that ready for writing
-        #3rd list contain the socket with exceptional conditions 
-        print('what ready: ', whatReady)
         howLongInSelect = (time.time() - startedSelect)
         if whatReady[0] == []: # Timeout
             return "Request timed out."
@@ -56,36 +48,22 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         recPacket, addr = mySocket.recvfrom(1024)
 
         #Fill in start
-
-
-
         #Fetch the ICMP header from the IP packet
         icmp_header = recPacket[20:28]
         # print('imcp_header: ', icmp_header)
 
         type_, code, checksum, packet_id, sequence = struct.unpack("bbHHh", icmp_header)
-        # print(f"ICMP Type: {type_}")
-        # print(f"ICMP Code: {code}")
-        # print(f"Checksum: {checksum}")
-        # print(f"Packet ID: {packet_id}")
-        # print(f"Sequence: {sequence}")
         if packet_id == ID:
-            # print('hello?')
             #Calculate the number of bytes for a double precision float 
-            # bytes_in_double = struct.calcsize("d")
-            # print('bytes in double: ', bytes_in_double)
-            
+            bytes_in_double = struct.calcsize("d")
             #Extract and unpack a double precision float from the received packet 
-            time_sent = struct.unpack("d", recPacket[28:52])[0]
+            time_sent = struct.unpack("d", recPacket[28:28 + bytes_in_double])[0]
             print('time sent: ', time_sent)
             #Return time spent 
             return timeReceived - time_sent
-            
-
-
-
         #Fill in end
         timeLeft = timeLeft - howLongInSelect
+        print('time left: ', timeLeft)
         if timeLeft <= 0:
             return "Request timed out."
             
@@ -105,12 +83,11 @@ def sendOnePing(mySocket, destAddr, ID):
 
 
     # Get the right checksum, and put in the header
-    if sys.platform == 'darwin':
+    if sys.platform == 'darwin':        ##check if the OS is macOS 
     # Convert 16-bit integers from host to network byte order
         myChecksum = htons(myChecksum) & 0xffff
     else:
         myChecksum = htons(myChecksum)
-    
     
     header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, ID, 1)
     packet = header + data
@@ -147,7 +124,8 @@ def ping(host, timeout=1):
     while 1 :
         delay = doOnePing(dest, timeout)
         print(f"Reply from {dest}: time={delay*1000:.2f}ms")
-        time.sleep(1)# one second
+        print("")
+        time.sleep(1) # one second
     # return delay
     
-ping("127.0.0.1")
+ping("google.com")
