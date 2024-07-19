@@ -13,24 +13,29 @@ def checksum(source_string):
     count = 0
 
     while count < countTo:
-        thisVal = ord(source_string[count+1]) * 256 + ord(source_string[count])
+        thisVal = source_string[count+1] * 256 + source_string[count]
         csum = csum + thisVal
         csum = csum & 0xffffffff
         count = count + 2
 
-        if countTo < len(source_string):
-            csum = csum + ord(source_string[len(source_string) - 1])
-            csum = csum & 0xffffffff
+    if countTo < len(source_string):
+        csum = csum + ord(source_string[len(source_string) - 1])
+        csum = csum & 0xffffffff
         
-        csum = (csum >> 16) + (csum & 0xffff)
-        csum = csum + (csum >> 16)
-        answer = ~csum
-        answer = answer & 0xffff
-        answer = answer >> 8 | (answer << 8 & 0xff00)
-        return answer
+    csum = (csum >> 16) + (csum & 0xffff)
+    csum = csum + (csum >> 16)
+    answer = ~csum
+    answer = answer & 0xffff
+    answer = answer >> 8 | (answer << 8 & 0xff00)
+    return answer
     
 def receiveOnePing(mySocket, ID, timeout, destAddr):
     timeLeft = timeout
+
+    print('my socket: ', mySocket)
+    print('id: ', ID)
+    print('timeout: ', timeout)
+    print('dest address: ', destAddr)
     
     while 1:
         startedSelect = time.time()         #record a current time, use to measure how long the select call takes 
@@ -55,15 +60,28 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
 
 
         #Fetch the ICMP header from the IP packet
-        icmp_header = recPacket[160:192]
-        print('imcp_header: ', icmp_header)
+        icmp_header = recPacket[20:28]
+        # print('imcp_header: ', icmp_header)
 
-        type_, code, checksum, packet_id, sequence = struct.unpack("!bbHHh", icmp_header)
-        print(f"ICMP Type: {type_}")
-        print(f"ICMP Code: {code}")
-        print(f"Checksum: {checksum}")
-        print(f"Packet ID: {packet_id}")
-        print(f"Sequence: {sequence}")
+        type_, code, checksum, packet_id, sequence = struct.unpack("bbHHh", icmp_header)
+        # print(f"ICMP Type: {type_}")
+        # print(f"ICMP Code: {code}")
+        # print(f"Checksum: {checksum}")
+        # print(f"Packet ID: {packet_id}")
+        # print(f"Sequence: {sequence}")
+        if packet_id == ID:
+            # print('hello?')
+            #Calculate the number of bytes for a double precision float 
+            # bytes_in_double = struct.calcsize("d")
+            # print('bytes in double: ', bytes_in_double)
+            
+            #Extract and unpack a double precision float from the received packet 
+            time_sent = struct.unpack("d", recPacket[28:52])[0]
+            print('time sent: ', time_sent)
+            #Return time spent 
+            return timeReceived - time_sent
+            
+
 
 
         #Fill in end
@@ -83,7 +101,7 @@ def sendOnePing(mySocket, destAddr, ID):
     header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, ID, 1)  
     data = struct.pack("d", time.time())
     # Calculate the checksum on the data and the dummy header.
-    myChecksum = checksum(str(header + data))
+    myChecksum = checksum(header + data)
 
 
     # Get the right checksum, and put in the header
@@ -128,8 +146,8 @@ def ping(host, timeout=1):
     # Send ping requests to a server separated by approximately one second
     while 1 :
         delay = doOnePing(dest, timeout)
-        print('delay here: ', delay)
+        print(f"Reply from {dest}: time={delay*1000:.2f}ms")
         time.sleep(1)# one second
-    return delay
+    # return delay
     
 ping("127.0.0.1")
