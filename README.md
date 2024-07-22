@@ -7,8 +7,8 @@ Online lectures and review questions can be found here: [Lectures](https://gaia.
 1. [Computer Networks and The Internet](https://github.com/duyhuynh02/networking/tree/main/comp-network-and-the-internet)
 2. [The Application Layer](https://github.com/duyhuynh02/networking/tree/main/application-layer)
 3. [The Transport Layer](https://github.com/duyhuynh02/networking/tree/main/transport-layer)
-4. The Network Layer: the Data Plane 
-5. The Network Layer: the Control Plane 
+4. [The Network Layer: the Data Plane](https://github.com/duyhuynh02/networking/tree/main/network-layer/data-plane) 
+5. [The Network Layer: the Control Plane](https://github.com/duyhuynh02/networking/blob/main/network-layer/control-plane/questions.md)
 6. The Link Layer 
 7. Wireless and Mobile Networks 
 8. Network Security 
