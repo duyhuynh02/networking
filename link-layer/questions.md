@@ -47,3 +47,48 @@ R8. Why does collision occur in CSMA, if all nodes perform carrier sensing befor
 ```sh
 Not used in full-duplex operation, so if both nodes are in middle of tranmission, it will cause collision. 
 ```
+
+## Section 6.4
+R9. How big is the MAC address space? The IPv4 address space? The IPv6 address space?
+```sh
+MAC address: 2^48 = 281,474,976,710,656
+IPv4: 32-bit address length -> 2^32 = 4,294,967,296
+IPv6: 128-bit address length -> 2^128 = 340,282,366,920,938,463,463,374,607,431,768,211,456 (that means you can count every sand on the planet)
+```
+R10. Suppose nodes A, B, and C each attach to the same broadcast LAN (through their adapters). If A sends thousands of IP datagrams to B with each encapsulating frame addressed to the MAC address of B, will C’s adapter process these frames? 
+```sh
+Yes
+```
+If so, will C’s adapter pass the IP datagrams in these frames to the network layer C? 
+```sh
+No
+```
+How would your answers change if A sends frames with the MAC broadcast address?
+```sh
+For MAC broadcast address, that means it sends to all the node in LAN (ok the MAC address is FF:FF:FF:FF:FF) then the answer will be yes for both. 
+```
+R11. IEEE manages the MAC address space, allocating chunks of it to companies manufacturing network adapters. The first half of the bits of the addresses in these chunks are fixed, ensuring that the address space is unique. How long will a chunk last for a company manufacturing 1,000,000 network adapters per year?
+```sh
+2^24 / 1,000,000 = 16.78 ~ 17 years. 
+```
+R12. For the network in Figure 6.19, the router has two ARP modules, each with its own ARP table. Is it possible that the same MAC address appears in both tables?
+```sh
+Yes, if node A request a MAC address of node B through switch SW, then both node A and switch SW will appears in both tables. 
+```
+R13. What is a hub used for?
+```sh
+Hub has the same functionality as routers/switches, but hubs do not make intelligent forwarding so it's being replaced. 
+```
+R14. Consider Figure 6.15. How many subnetworks are there, in the addressing sense of Section 4.3?
+```sh
+3
+```
+R15. Each host and router has an ARP table in its memory. What are the contents of this table?
+```sh
+IP address (layer 3 - network layer) and MAC address (layer 2 - data link layer)
+```
+R16. The Ethernet frame begins with an 8-byte preamble field. The purpose of the first 7 bytes is to “wake up” the receiving adapters and to synchronize their clocks to that of the sender’s clock. What are the contents of the 8 bytes? What is the purpose of the last byte?
+```sh
+The contents of the first 7 bytes is 10101010 
+The last byte is set to 10101011, indicates that the upcoming bits represent the destination address. (SFD - or Start of Frame Delimiter), servers as a final sync signal, warning stations that this is the last change to sync before the actual frame begin.
+```
