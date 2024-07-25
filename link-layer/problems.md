@@ -90,17 +90,25 @@ P10. Consider two nodes, A and B, that use the slotted ALOHA protocol to contend
 
 a. Provide a formula for node A’s average throughput. What is the total efficiency of the protocol with these two nodes?
 ```sh
-node A's average throughput: 
+node A's average throughput: S(A) = pA * (1-pB) while pA is the probability of node A transmit and B does not transmit 
+
+Same for S(B) = pB * (1- pA)
+The total effieciency of the protocol with these two nodes = S(A) + S(B)
 ```
 b. If pA = 2pB, is node A’s average throughput twice as large as that of node B? Why or why not? If not, how can you choose pA and pB to make that happen?
 ```sh
+S(A) = 2pB * (1 - pB) 
+S(B) = pB * (1 - pA) = pB * (1 - 2pB)
 
+S(A) / S(B) = 2(1 - pB) / (1 - 2pB) -> so no
+
+pA should equal to pB to make that happen. 
 ```
-c. In general, suppose there are N nodes, among which node A has retransmission probability 2p and all other nodes have retransmission probability
+c. In general, suppose there are N nodes, among which node A has retransmission probability 2p and all other nodes have retransmission probability p. Provide expressions to compute the average throughputs of node A and of any other node.
 ```sh
+Sum of all other nodes: p(n)
+Average throughputs of node A = 2p * (1-p)^(n-1)
 
-```
-p. Provide expressions to compute the average throughputs of node A and of any other node.
-```sh
-
+Use the same heuristics:
+Any other node's: S(other) = p * (1-2p) * (1-p)^(n-2)
 ```
