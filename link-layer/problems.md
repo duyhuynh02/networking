@@ -147,3 +147,31 @@ d. What is the efficiency of this four-node system?
 ```sh
 4*p*(1−p)^3
 ```
+
+P13. Consider a broadcast channel with N nodes and a transmission rate of R bps. Suppose the broadcast channel uses polling (with an additional polling node) for multiple access. Suppose the amount of time from when a node completes transmission until the subsequent node is permitted to transmit (that is, the polling delay) is dpoll. Suppose that within a polling round, a given node is allowed to transmit at most Q bits. What is the maximum throughput of the broadcast channel?
+```sh
+Throughput (Tmax) is equal to total number of bits in one polling around (1) divided by the total time take for that round (2)
+
+(1) Total number of bits in one polling: N*Q
+(2) Time to transfer Q bits -> Q/R seconds 
+Total time per node -> Q/R + d(poll) seconds
+Total time for all node -> N*(Q/R +d(poll))
+
+Tmax = (1) / (2) = N * Q / N*(Q/R +d(poll)) = QR / (Q + R*d(poll)) 
+d(poll) -> 0 
+```
+
+P17. Recall that with the CSMA/CD protocol, the network adapter waits K * 512 bit times after a collision, where K is drawn randomly. For K = 115, how long does the adapter wait until returning to Step 2 for:
+a. a 10 Mbps broadcast channel?
+```sh
+1 bit time = 1 / 10*10^6 
+Delay for 512 Bit time: 512 * 10^(-7)
+Delay total wait time: 512 * 10^(-7) * 115 
+```
+b. a 100 Mbps broadcast channel?
+```sh
+Same as #a 
+```
+
+
+
