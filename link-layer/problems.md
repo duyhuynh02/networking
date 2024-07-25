@@ -112,3 +112,38 @@ Average throughputs of node A = 2p * (1-p)^(n-1)
 Use the same heuristics:
 Any other node's: S(other) = p * (1-2p) * (1-p)^(n-2)
 ```
+
+P11. Suppose four active nodes—nodes A, B, C and D—are competing for access to a channel using slotted ALOHA. Assume each node has an infinite number of packets to send. Each node attempts to transmit in each slot with probability p. The first slot is numbered slot 1, the second slot is numbered slot 2, and so on.
+
+a. What is the probability that node A succeeds for the first time in slot 4?
+```sh
+The probability that A does not transmit: 1 - p
+The probability that at least one node (not including A) transmit: p*(1 - (1 - p)^3) 
+Total probability of A fails to transmit successfully in a lot: (1-p) + p*(1-(1-p)^3) = 1-p(1-p)^3
+For failing all first 3 slots -> [(1 - p)*(1-p)^3]^3
+------------------------------------------------------------
+The probability P(A) success in slot 4: P(A) = p * (1-p)^3
+----------------------------------------------------
+The total is: [(1 - p)*(1-p)^3]^3 * p * (1-p)^3 
+```
+b. What is the probability that some node (either A, B, C or D) succeeds in slot 5?
+```sh
+The probability that node A transmit is p
+The probability that node B, C and D do not transmit is (1-p)^3
+The probability that node A success in slot 5 is p * (1-p)^3
+The probability that other node (A, B, C or D) success in slot 5 is 4*p * (1-p)^3
+```
+c. What is the probability that the first success occurs in slot 4?
+```sh
+Probability that the first success occurs in last 4:
+- No successfull tranmission in slots 1,2, and 3: 
+  + No one transmit in a given slot: (1 - p)^4 
+  + Collison between more than 2 nodes: 1 - (4p * (1 - p)^3) (while 4p(1-p)^3 is the probability that exactly one node transmit) -> for 3 slots: 1 - (4p*(1-p)^3)^3
+  - Exactly one succesfull tranmission in slot 4 -> 4p * (1- p )^3 
+---------------------------------------------------
+Is the product of both: [1 - (4p*(1-p)^3)^3][4p * (1- p )^3 ]
+```
+d. What is the efficiency of this four-node system?
+```sh
+4*p*(1−p)^3
+```
