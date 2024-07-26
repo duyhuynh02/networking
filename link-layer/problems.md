@@ -173,5 +173,34 @@ b. a 100 Mbps broadcast channel?
 Same as #a 
 ```
 
+P18. Suppose nodes A and B are on the same 12 Mbps broadcast channel, and the propagation delay between the two nodes is 316 bit times. Suppose CSMA/ CD and Ethernet packets are used for this broadcast channel. Suppose node A begins transmitting a frame and, before it finishes, node B begins transmitting a frame. If the answer is yes, then A incorrectly believes that its frame was successful transmitted without a collision. Hint: Suppose at time t = 0 bits, A begins transmitting a frame. In the worst case, A transmits a minimum-sized frame of 512 + 64 bit times. So A would finish transmitting the frame at t = 512 + 64 bit times. Thus, the answer is no, if B’s signal reaches A before bit time t = 512 + 64 bits. In the worst case, when does B’s signal reach A?
+```sh
+A and B ------ 12 Mbps broadcast channel
+propagation delay: 316 bit times 
+use: CSMA/CD and Ethernet 
+```
 
+```sh
+Time for node A to transmitting: (512 + 64) = 576 bit times 
+Assume node B starts transmitting at the time of 316 -> so to transmit from B to A will take 316 + 316 = 632 bit times  
+So, no. 
+```
+
+P19. Suppose nodes A and B are on the same 10 Mbps broadcast channel, and the propagation delay between the two nodes is 245 bit times. Suppose A and B send Ethernet frames at the same time, the frames collide, and then A and B choose different values of K in the CSMA/CD algorithm. Assuming no other nodes are active, can the retransmissions from A and B collide? For our purposes, it suffices to work out the following example. Suppose A and B begin transmission at t = 0 bit times. They both detect collisions at t = 245 t bit times. Suppose KA = 0 and KB = 1. At what time does B schedule its retransmission? At what time does A begin transmission? (Note: The nodes must wait for an idle channel after returning to Step 2—see protocol.) At what time does A’s signal reach B? Does B refrain from transmitting at its scheduled time?
+```sh
+A and B on: 10 Mbps broadcast channel
+A <---> B: 245 bit times 
+A <--> B: same time, but the frame collide 
+
+A and B still begin transmissin at t = 0 
+detect collision at t = 245 bit times 
+kA = 0
+kB = 1 
+
+Time B schedule its retranmission?
+Time A schedule its retranmission?
+
+Time does A's signal reach B? 
+Does B refrain from transmistting at is scheduled time? 
+```
 
