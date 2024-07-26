@@ -197,10 +197,11 @@ detect collision at t = 245 bit times
 kA = 0
 kB = 1 
 
-Time B schedule its retranmission?
-Time A schedule its retranmission?
+Backoff time can be calculated = K * 512 (where K is a random integer from from [0, 2^n - 1], and n is the number of collision experienced by the node, that means, 1)
+Time B schedule its retranmission? -> 512 * 1 = 512 bit times 
+Time A schedule its retranmission? -> 512 * 0 = 0 bit times => rretransfer immediately
 
-Time does A's signal reach B? 
-Does B refrain from transmistting at is scheduled time? 
+Time does A's signal reach B? => 245 + 245 = 490 bit times 
+Does B refrain from transmistting at is scheduled time? -> yes, 512 + 245 = 757 bit times  
 ```
 
