@@ -205,3 +205,22 @@ Time does A's signal reach B? => 245 + 245 = 490 bit times
 Does B refrain from transmistting at is scheduled time? -> yes, 512 + 245 = 757 bit times  
 ```
 
+![alt text](figure5-15.png)
+
+P23. Consider Figure 5.15. Suppose that all links are 120 Mbps. What is the maximum total aggregate throughput that can be achieved among 12 hosts (4 in each department) and 2 servers in this network? You can assume that any host or server can send to any other host or server. Why?
+```sh
+120 x 14 = 1680 Mbps. 
+```
+
+P24. Suppose the three departmental switches in Figure 5.15 are replaced by hubs. All links are 120 Mbps. Now answer the questions posed in Problem P23
+```sh
+The difference between hubs and switches is switches works in layer 2 where it can filter and forward data based on MAC address, and also it can manage multiple simultaneous connections and avoid collisions. 
+
+Meanwhile hubs operate on layer 1 (physical layer) and simply broadcast incoming data to all ports, leading to potential collisions and reduced effective bandwidth.
+
+For instance, in the intra-communication, if it exist the collion in the department, where contains 4 host devices, the 120 Mbps may share among these 4 devices -> Efffective bandwidth of per hub is 120 Mbps / 2 = 60 Mbps, shared among 4 hosts -> 60 / 4 = 15 Mbps / host 
+
+In inter-department and server communication -> bandwdith from each hub -> central switch still 120 Mbps 
+
+Maxmimum will be 120*3 + 3*60 = 540 Mbps 
+```
