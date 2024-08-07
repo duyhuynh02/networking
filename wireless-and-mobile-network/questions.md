@@ -152,25 +152,29 @@ Data packets travel in a triangular path: from the correspondent node -> home ag
 
 ## SECTION 7.6
 R27. Describe the similarity and differences in tunnel configuration when a mobile device is resident in its home network, versus when it is roaming in a visited network. 
-```sh
-
-```
+| Home network | Visited network |
+|--------------|-----------------|
+| Use its own IP address | Use a care-of address assigned by the visited network | 
+| Routed directly to the mobile device using standard IP routing | Data packets are first sent to the network then Home Agent intecepts these packets and tunnels them to the care-of address in the visited network | 
 
 R28. When a mobile device is handed over from one base station to another in a 4G/5G network, which network element makes the decision to initiate that handover? Which network element chooses the target base station to which the mobile device will be handed over?
-```sh
+| Type | 4G network | 5G Network |
+|------|------------|------------|
+| Decision to initiate handover | eNodeB| gNodeB |
+| Choosing the target base station | eNodeB and MME (Mobility Management Entity) | gNodeB and AMF (Access and Mobility Management Function) 
 
-```
 R29. Describe how and when the forwarding path of datagrams entering the visited network and destined to the mobile device changes before, during, and after hand over.
 ```sh
+Before: Datagrams are routed to home network (HA) to the devices. 
 
-```
-R30. Consider the following elements of the Mobile IP architecture: the home network, foreign network permanent IP address, home agent, foreign agent, data plane forwarding, Access Point (AP), and WLANs at the network edge. What are the closest equivalent elements in the 4G/5G cellular network architecture?
-```sh
+During: Datagrams are tunnel from HA to the FA in the visited network and then forwarded to the devices  
 
+After: Datagrams are directly routed from the HA to the FA in the visited network, with the FA forwarding to the devices. 
 ```
+
 ## SECTION 7.7
 R31. What are three approaches that can be used to avoid having a single wireless
 link degrade the performance of an end-to-end transport-layer TCP connection?
 ```sh
-
+Later
 ```
